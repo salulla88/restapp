@@ -84,7 +84,7 @@ public class Main {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
       stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT count(* FROM ticks");
+      ResultSet rs = stmt.executeQuery("SELECT count(*) AS rowcount FROM ticks");
 
       ArrayList<String> output = new ArrayList<String>();
       int hitCount = 0;
