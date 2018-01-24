@@ -44,6 +44,7 @@ import java.util.Map;
 
 import com.example.OutputBean;
 
+@RequestMapping("/restapp")
 @Controller
 @SpringBootApplication
 public class Main {
