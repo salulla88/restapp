@@ -90,7 +90,8 @@ public class Main {
       int hitCount = 0;
       while (rs.next()) {
            hitCount= rs.getInt("rowcount");
-           output.add("Record Count : " + hitCount);
+	   LocalTime currentTimeInEST = LocalTime.now(ZoneId.of("America/New_York"));
+           output.add("Record Count : " + hitCount + " " + currentTimeInEST);
       }
 
       model.put("records", output);
