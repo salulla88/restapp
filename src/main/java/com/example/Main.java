@@ -78,6 +78,30 @@ public class Main {
     }
   }
 
+  @RequestMapping("/hitCount")
+  String hitCount(Map<String, Object> model) {
+    try (Connection connection = dataSource.getConnection()) {
+      Statement stmt = connection.createStatement();
+      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
+      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
+      ResultSet rs = stmt.executeQuery("SELECT count(* FROM ticks");
+
+      ArrayList<String> output = new ArrayList<String>();
+      int hitCount = 0;
+      while (rs.next()) {
+           hitCount= rs.getInt("rowccount");
+           output.add("Read from DB: " + rs.getTimestamp("tick"));
+           output.add("Record Count : " + hitCount);
+      }
+
+      model.put("records", output);
+      return "db";
+    } catch (Exception e) {
+      model.put("message", e.getMessage());
+      return "error";
+    }
+  }
+
   @RequestMapping("/hello")
   String hello(Map<String, Object> model) {
     RelativisticModel.select();
