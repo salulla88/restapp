@@ -29,6 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.ZoneId;
 import java.time.LocalDateTime;
@@ -80,7 +81,7 @@ public class Main {
     }
   }
 
-  @RequestMapping("/hitCount")
+  @RequestMapping(value="/hitCount", method=RequestMethod.GET, produces="application/json")
   String hitCount(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
@@ -88,16 +89,16 @@ public class Main {
       stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
       ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS rowcount FROM ticks");
 
-      ArrayList<String> output = new ArrayList<String>();
+      String output = "";
       int hitCount = 0;
       while (rs.next()) {
            hitCount= rs.getInt("rowcount");
 	   LocalDateTime currentDateTimeInEST = LocalDateTime.now(ZoneId.of("America/New_York"));
-           output.add("Record Count : " + hitCount + " " + currentDateTimeInEST);
+           output = "Record Count : " + hitCount + " " + currentDateTimeInEST;
       }
 
       model.put("records", output);
-      return "db";
+      return output;
     } catch (Exception e) {
       model.put("message", e.getMessage());
       return "error";
@@ -128,3 +129,4 @@ public class Main {
   }
 
 }
+
