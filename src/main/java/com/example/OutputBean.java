@@ -1,13 +1,13 @@
 package com.example;
 
  public class OutputBean {
-    public String timeStamp;
+    public String timestamp;
     public int calls;
 
     public OutputBean() {} 
 
     public OutputBean(String timeStamp, int calls) {
-      this.timeStamp = timeStamp;
+      this.timestamp = timeStamp;
       this.calls = calls;
     }
   }
