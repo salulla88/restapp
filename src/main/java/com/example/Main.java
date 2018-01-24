@@ -97,11 +97,9 @@ public class Main {
            output = "Record Count : " + hitCount + " " + currentDateTimeInEST;
       }
 
-      model.put("records", output);
       return output;
     } catch (Exception e) {
-      model.put("message", e.getMessage());
-      return "error";
+      return "error : " + e.getMessage();
     }
   }
 
