@@ -42,6 +42,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.example.OutputBean;
+
 @Controller
 @SpringBootApplication
 public class Main {
@@ -83,25 +85,25 @@ public class Main {
   }
 
   @RequestMapping(value="/hitCount", method=RequestMethod.GET, produces="application/json")
-  @ResponseBody String hitCount() {
+  @ResponseBody OutputBean hitCount() {
+    OutputBean outputBean = null;
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
       stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
       ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS rowcount FROM ticks");
 
-      String output = "";
       int hitCount = 0;
       while (rs.next()) {
            hitCount= rs.getInt("rowcount");
 	   LocalDateTime currentDateTimeInEST = LocalDateTime.now(ZoneId.of("America/New_York"));
-           output = "Record Count : " + hitCount + " " + currentDateTimeInEST;
+           outputBean = new OutputBean(currentDateTimeInEST.toString(), hitCount);
       }
 
-      return output;
     } catch (Exception e) {
-      return "error : " + e.getMessage();
+      e.printStackTrace();
     }
+    return outputBean;
   }
 
   @RequestMapping("/hello")
