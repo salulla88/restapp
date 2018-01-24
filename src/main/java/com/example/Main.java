@@ -84,13 +84,12 @@ public class Main {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
       stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT count(*) AS rowcount FROM ticks");
+      ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS rowcount FROM ticks");
 
       ArrayList<String> output = new ArrayList<String>();
       int hitCount = 0;
       while (rs.next()) {
-           hitCount= rs.getInt("rowccount");
-           output.add("Read from DB: " + rs.getTimestamp("tick"));
+           hitCount= rs.getInt("rowcount");
            output.add("Record Count : " + hitCount);
       }
 
