@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.ZoneId;
 import java.time.LocalDateTime;
@@ -82,7 +83,7 @@ public class Main {
   }
 
   @RequestMapping(value="/hitCount", method=RequestMethod.GET, produces="application/json")
-  String hitCount(Map<String, Object> model) {
+  @ResponseBody String hitCount() {
     try (Connection connection = dataSource.getConnection()) {
       Statement stmt = connection.createStatement();
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
