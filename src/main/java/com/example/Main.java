@@ -31,7 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.ZoneId;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -92,8 +92,8 @@ public class Main {
       int hitCount = 0;
       while (rs.next()) {
            hitCount= rs.getInt("rowcount");
-	   LocalTime currentTimeInEST = LocalTime.now(ZoneId.of("America/New_York"));
-           output.add("Record Count : " + hitCount + " " + currentTimeInEST);
+	   LocalDateTime currentDateTimeInEST = LocalDateTime.now(ZoneId.of("America/New_York"));
+           output.add("Record Count : " + hitCount + " " + currentDateTimeInEST);
       }
 
       model.put("records", output);
