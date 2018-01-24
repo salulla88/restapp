@@ -1,13 +1,13 @@
 package com.example;
 
  public class OutputBean {
-    public String currentTime;
-    public int hitCount;
+    public String timeStamp;
+    public int calls;
 
     public OutputBean() {} 
 
-    public OutputBean(String currentTime, int hitCount) {
-      this.currentTime = currentTime;
-      this.hitCount = hitCount;
+    public OutputBean(String timeStamp, int calls) {
+      this.timeStamp = timeStamp;
+      this.calls = calls;
     }
   }
